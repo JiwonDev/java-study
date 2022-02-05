@@ -3,6 +3,7 @@ package min;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("asdasd");
+        String testMin = "hello java study";
+        System.out.println("testMin = " + testMin);
     }
 }
