@@ -1,2 +1,5 @@
-package min;public class Calculator {
+package min;
+
+public class Calculator {
+
 }
