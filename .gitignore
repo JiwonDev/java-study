@@ -1,12 +1,3 @@
-/.idea/sonarlint/issuestore/index.pb
-/.idea/.gitignore
-/.idea/description.html
-/.idea/encodings.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/project-template.xml
-/out/production/study2/ch/Main.class
-/out/production/study2/com/Main.class
-/out/production/study2/jiwon/Main.class
-/out/production/study2/min/Main.class
+/.idea/*
+/out/*
 /study2.iml
