@@ -8,7 +8,8 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        CalculatorFromString();
+        Calculator calculator = new Calculator();
+//        CalculatorFromString();
     }
 
     private static void CalculatorFromString() {
@@ -24,7 +25,6 @@ public class Main {
                     list.addFirst(s);
                 } else {
                     list.add(s);
-                    System.out.println("list = " + list);
                 }
                 if (list.size() == 3) {
                     String symbol = list.pop();
@@ -35,9 +35,14 @@ public class Main {
                     }
                 }
             }
-            if (list.size() > 0) {
-                System.out.println(" 0 " );
+
+            String pop = list.pop();
+            if (symbols.stream().anyMatch(item -> item.equals(pop))) {
+                System.out.println("0");
+            } else {
+                System.out.println("list.pop() = " + pop);
             }
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +53,6 @@ public class Main {
         String firstValue = list.pop();
         String secondValue = list.pop();
         double v = Double.parseDouble(firstValue) + Double.parseDouble(secondValue);
-        System.out.println("v = " + v);
+        list.push(String.valueOf(v));
     }
 }
