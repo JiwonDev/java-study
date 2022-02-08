@@ -1,4 +1,4 @@
-package min;
+package com.min;
 
 public class Main {
 

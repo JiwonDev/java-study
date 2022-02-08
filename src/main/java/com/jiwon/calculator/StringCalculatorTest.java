@@ -1,4 +1,4 @@
-package jiwon.calculator;
+package com.jiwon.calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
@@ -13,9 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 /**
- * 요구사항
- * 1. '3+4+5' 를 입력하면 int 형으로 계산 결과를 반환한다.
- * 2. '3+' 처럼 처리할 수 없는 경우 0을 반환한다.
+ * 요구사항 1. '3+4+5' 를 입력하면 int 형으로 계산 결과를 반환한다. 2. '3+' 처럼 처리할 수 없는 경우 0을 반환한다.
  */
 public final class StringCalculatorTest {
 

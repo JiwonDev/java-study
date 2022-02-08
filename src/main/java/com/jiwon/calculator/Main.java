@@ -1,4 +1,4 @@
-package jiwon.calculator;
+package com.jiwon.calculator;
 
 import java.util.Scanner;
 

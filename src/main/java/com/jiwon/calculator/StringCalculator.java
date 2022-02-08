@@ -1,9 +1,10 @@
-package jiwon.calculator;
+package com.jiwon.calculator;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class StringCalculator {
 
@@ -31,7 +32,7 @@ public final class StringCalculator {
 
     private List<String> extractOperators(String string) {
         return Pattern.compile(REGEX_OPERATORS).matcher(string).results().map(MatchResult::group)
-            .toList();
+            .collect(Collectors.toList());
     }
 
     private boolean isValid(String string) {
