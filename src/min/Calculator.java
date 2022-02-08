@@ -19,7 +19,7 @@ public class Calculator {
         startCalculator();
     }
 
-    private void startCalculator() {
+    public String startCalculator() {
         for (String splitDatum : splitData) {
             if (SYMBOLS.stream().anyMatch(item -> item.equals(splitDatum))) {
                 result.addFirst(splitDatum);
@@ -43,15 +43,15 @@ public class Calculator {
                 }
             }
         }
-        checkOtherCondition();
+        return checkOtherCondition();
     }
-    private void checkOtherCondition() {
+    private String checkOtherCondition() {
         String pop = result.pop();
         String[] split = pop.split("\\.");
         if (Objects.equals(split[split.length - 1], "0")) {
             pop = split[0];
         }
-        System.out.println(pop);
+        return pop;
     }
 
     private void inputData() {
@@ -59,7 +59,9 @@ public class Calculator {
         try {
             String getData = br.readLine();
             String[] split = getData.split("(?=[*/+-])|(?<=[*/+-])");
-            if (SYMBOLS.stream().noneMatch(item -> item.equals(split[split.length - 1]))) {
+            boolean operatorMatch = SYMBOLS.stream().noneMatch(item -> item.equals(split[split.length - 1]) || item.equals(split[0]));
+            // {조건을 처리하는 메소드를 만들 예정}
+            if (operatorMatch) {
                 this.splitData.addAll(List.of(split));
             }else {
                 throw new IllegalArgumentException("수식이 잘못됨");
