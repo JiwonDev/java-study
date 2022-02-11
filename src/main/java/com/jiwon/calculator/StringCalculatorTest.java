@@ -19,7 +19,7 @@ public final class StringCalculatorTest {
 
     @Test
     @DisplayName("올바른 식을 입력하고 계산 결과를 반환받는다.")
-    void StringCalculatorTest() throws Exception {
+    void string_calculator_test() throws Exception {
         // Arrange 준비
         var calculator = new StringCalculator();
 
@@ -62,7 +62,10 @@ public final class StringCalculatorTest {
                 () -> assertEquals(0, calculator.getResult("1-124*23/1"))),
 
             dynamicTest("숫자만 존재하는 경우",
-                () -> assertEquals(0, calculator.getResult("1234")))
+                () -> assertEquals(0, calculator.getResult("1234"))),
+
+            dynamicTest("연산자만 존재하는 경우",
+                () -> assertEquals(0, calculator.getResult("+")))
         );
     }
 
