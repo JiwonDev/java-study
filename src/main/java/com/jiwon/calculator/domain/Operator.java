@@ -2,5 +2,5 @@ package com.jiwon.calculator.domain;
 
 public interface Operator {
 
-    long compute(long o1, long o2);
+    double apply(double o1, double o2);
 }

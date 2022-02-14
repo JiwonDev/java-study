@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public final class StringCalculator {
 
     private static final String REGEX_OPERATORS = "[+*/\\-]";
-    private static final String REGEX_EXPRESSION = "^[0-9]+([+*/\\-][0-9]+)*";
+    private static final String REGEX_EXPRESSION = "^[0-9]+([.][0-9]+)?([+*/\\-][0-9]+([.][0-9]+)?)*";
 
     private final Map<String, Operator> operatorMap;
 
@@ -28,31 +28,33 @@ public final class StringCalculator {
         );
     }
 
-    public long calculate(String formula) {
-        if (isBlank(formula) || !isValid(formula)) {
-            return 0;
-        }
+    public double calculate(String formula) {
+        if (isBlank(formula)) return 0;
+        formula = removeSpace(formula);
+        if (!isValid(formula)) return 0;
 
-        long[] numbers = extractNumbers(formula);
+        double[] numbers = extractNumbers(formula);
         List<Operator> operators = extractOperators(formula);
 
-        if (!isComputable(numbers, operators)) {
-            return 0;
-        }
-
+        if (!isComputable(numbers, operators)) return 0;
         return compute(numbers, operators);
     }
 
-    private long compute(long[] numbers, List<Operator> operators) {
+    private String removeSpace(String formula) {
+        return formula.replace(" ", "");
+    }
+
+    private double compute(double[] numbers, List<Operator> operators) {
         var iterOperator = operators.iterator();
 
         return Arrays.stream(numbers)
-            .reduce((a, b) -> iterOperator.next().compute(a, b))
+            .reduce((a, b) -> iterOperator.next().apply(a, b))
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    private long[] extractNumbers(String string) {
-        return Arrays.stream(string.split(REGEX_OPERATORS)).mapToLong(Long::parseLong).toArray();
+    private double[] extractNumbers(String string) {
+        return Arrays.stream(string.split(REGEX_OPERATORS)).mapToDouble(Double::parseDouble)
+            .toArray();
     }
 
     private List<Operator> extractOperators(String string) {
@@ -65,7 +67,7 @@ public final class StringCalculator {
         return stringOperators.stream().map(operatorMap::get).collect(Collectors.toList());
     }
 
-    private boolean isComputable(long[] numbers, List<Operator> operators) {
+    private boolean isComputable(double[] numbers, List<Operator> operators) {
         if (numbers.length == 1 && operators.isEmpty()) {
             return true;
         }

@@ -24,8 +24,8 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 final class StringCalculatorTest {
 
     @Test
-    @DisplayName("올바른 식을 입력하고 계산 결과를 반환받는다.")
-    void string_calculator_test() throws Exception {
+    @DisplayName("올바른 정수 식을 입력하고 계산 결과를 반환받는다.")
+    void string_calculator_test1() throws Exception {
         // Arrange 준비
         var calculator = new StringCalculator();
 
@@ -40,13 +40,32 @@ final class StringCalculatorTest {
         assertThat(add).isEqualTo(3 + 4 + 5);
         assertThat(subtract).isEqualTo(3 - 4 - 5);
         assertThat(multiply).isEqualTo(3 * 4 * 5);
-        assertThat(divide).isEqualTo(3 / 4 / 5);
+        assertThat(divide).isEqualTo(3.0 / 4.0 / 5.0);
         assertThat(result).isEqualTo((20 + 40 - 10) * 20 / 50);
     }
 
     @Test
-    @DisplayName("숫자만 입력하는 경우, 그 값을 그대로 반환한다.")
+    @DisplayName("올바른 실수 식을 입력하고, 계산 결과를 반환받는다.")
     void string_calculator_test2() throws Exception {
+        // Arrange
+        var calculator = new StringCalculator();
+
+        // Act
+        var add = calculator.calculate("3.1+4.2+5.3");
+        var subtract = calculator.calculate("3.1-4.2-5.3");
+        var multiply = calculator.calculate("3.1*4.2*5.3");
+        var divide = calculator.calculate("6.2/2");
+
+        // Assert
+        assertThat(add).isEqualTo(3.1 + 4.2 + 5.3);
+        assertThat(subtract).isEqualTo(3.1 - 4.2 - 5.3);
+        assertThat(multiply).isEqualTo(3.1 * 4.2 * 5.3);
+        assertThat(divide).isEqualTo(6.2/2);
+    }
+
+    @Test
+    @DisplayName("숫자만 입력하는 경우, 그 값을 그대로 반환한다.")
+    void string_calculator_test3() throws Exception {
         // Arrange
         var calculator = new StringCalculator();
 
@@ -55,8 +74,8 @@ final class StringCalculatorTest {
         var result2 = calculator.calculate("1000");
 
         // Assert
-        assertThat(result1).isEqualTo(1L);
-        assertThat(result2).isEqualTo(1000L);
+        assertThat(result1).isEqualTo(1D);
+        assertThat(result2).isEqualTo(1000D);
     }
 
     @ParameterizedTest
