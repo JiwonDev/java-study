@@ -2,6 +2,7 @@ package com._01_racingcar.racingcar.domain;
 
 import static org.junit.platform.commons.util.StringUtils.isBlank;
 
+import com._01_racingcar.racingcar.domain.exception.InvalidCarNameException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +11,7 @@ public final class CarFactory {
 
     public List<Car> getCars(String inputString) {
         if (!isValid(inputString)) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+            throw new InvalidCarNameException("잘못된 입력입니다.");
         }
 
         return toCars(inputString);

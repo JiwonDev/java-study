@@ -10,6 +10,14 @@ public final class SimpleGameStrategy implements GameStrategy {
     private final Random random = new Random();
 
     @Override
+    public List<Car> getWinners(List<Car> carList) {
+        int max = carList.stream().mapToInt(Car::getDistance).max()
+            .orElseThrow(IllegalArgumentException::new);
+
+        return carList.stream().filter(item -> item.getDistance() == max).toList();
+    }
+
+    @Override
     public void play(List<Car> carList) {
         carList.forEach(car -> {
             if (canBeMoved()) {
