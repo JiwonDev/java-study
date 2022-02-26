@@ -26,6 +26,11 @@ public final class Car {
         return position.getDistance();
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     static class Position {
 
         private int distance;
