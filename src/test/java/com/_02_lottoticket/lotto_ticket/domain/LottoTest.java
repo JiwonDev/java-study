@@ -1,15 +1,41 @@
 package com._02_lottoticket.lotto_ticket.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class LottoTest {
+
+    @Test
+    @DisplayName("보너스 볼은 당첨번호와 중복되면 예외를 반환한다..")
+    void input_bonus_test1() throws Exception {
+        var numbers = List.of(1, 2, 3, 4, 5, 6);
+        var bonus = 6;
+
+        assertThatThrownBy(() -> {
+            Lotto lotto = Lotto.create(numbers);
+            lotto.setBonus(bonus);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("보너스 볼을 성공적으로 입력받는다.")
+    void input_bonus_test() throws Exception {
+        var numbers = List.of(1, 2, 3, 4, 5, 6);
+        var bonus = 7;
+        Lotto lotto = Lotto.create(numbers);
+
+        var exception = catchThrowable(() -> lotto.setBonus(bonus));
+
+        assertThat(exception).isNull();
+    }
 
     @Test
     @DisplayName("지난 주 당첨 번호를 6개를 직접 입력받는다.")
@@ -25,43 +51,10 @@ class LottoTest {
     }
 
     @Test
-    @DisplayName("문자열로 로또번호 6개를 따음표로 구분해서 입력받을 수 있어야한다.")
-    void test22() throws Exception {
-        // Arrange
-        var numbers = "1,2,3,4,5,6";
-
-        // Act
-        var lotto = Lotto.create(numbers);
-
-        // Assert
-        assertThat(lotto.getNumbers()).contains(6, 2, 3, 4, 5, 1);
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @DisplayName("문자열로 번호를 입력할 때 빈 칸이나 null 이 들어오는 경우 예외를 반환한다.")
-    void test2(String args) throws Exception {
-        var exception = catchThrowable(() -> Lotto.create(args));
-
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("문자열에 중복된 숫자가 입력된 경우 예외를 반환한다.")
-    void test3() throws Exception {
-        // Arrange
-        var numbers = "1,2,2,4,5,6";
-        // Act
-        var exception = catchThrowable(() -> Lotto.create(numbers));
-        // Assert
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("중복된 숫자가 입력된 경우 예외를 반환한다.")
     void test444() throws Exception {
         // Arrange
-        var numbers = List.of(1,2,2,4,5,6);
+        var numbers = List.of(1, 2, 2, 4, 5, 6);
         // Act
         var exception = catchThrowable(() -> Lotto.create(numbers));
         // Assert
@@ -87,22 +80,65 @@ class LottoTest {
     @Test
     @DisplayName("입력된 번호가 6개가 아니라면 예외를 반환한다.")
     void test5() throws Exception {
-        // Arrange
+        var exception1 = catchThrowable(() -> Lotto.create(List.of(1)));
+        var exception2 = catchThrowable(() -> Lotto.create(List.of(1, 2, 3, 4, 5, 6, 7, 8)));
 
-        // Act
-
-        // Assert
-
+        assertThat(exception1).isInstanceOf(IllegalArgumentException.class);
+        assertThat(exception2).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    @DisplayName("숫자 외의 문자가 입력된 경우 예외를 반환하다.")
-    void test6() throws Exception {
-        // Arrange
+    @Nested
+    @DisplayName("문자열 입력 테스트")
+    class StringInputTest {
 
-        // Act
+        @Test
+        @DisplayName("로또번호 6개를 입력받고, Lotto 객체를 성공적으로 생성한다.")
+        void test() throws Exception {
+            var exception = catchThrowable(() -> Lotto.create("45,42,41,38,10,20", 11));
+            assertThat(exception).isNull();
+        }
 
-        // Assert
+        @Test
+        @DisplayName("로또번호 6개를 따음표로 구분해서 입력받을 수 있어야한다.")
+        void test22() throws Exception {
+            // Arrange
+            var numbers = "1,2,3,4,5,6";
 
+            // Act
+            var lotto = Lotto.create(numbers);
+
+            // Assert
+            assertThat(lotto.getNumbers()).contains(6, 2, 3, 4, 5, 1);
+        }
+
+        @ParameterizedTest
+        @NullAndEmptySource
+        @DisplayName("번호를 입력할 때 빈 칸이나 null 이 들어오는 경우 예외를 반환한다.")
+        void test2(String args) throws Exception {
+            var exception = catchThrowable(() -> Lotto.create(args));
+
+            assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("입력시 숫자 외의 문자가 입력된 경우 예외를 반환하다.")
+        void test6() throws Exception {
+            var numbers = "a,b,2,4,5,6";
+
+            var exception = catchThrowable(() -> Lotto.create(numbers));
+
+            assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("중복된 숫자가 입력된 경우 예외를 반환한다.")
+        void test3() throws Exception {
+            // Arrange
+            var numbers = "1,2,2,4,5,6";
+            // Act
+            var exception = catchThrowable(() -> Lotto.create(numbers));
+            // Assert
+            assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+        }
     }
 }
