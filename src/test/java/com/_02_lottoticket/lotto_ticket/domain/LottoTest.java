@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+import com._02_lottoticket.lotto_ticket.domain.exception.DuplicatedLottoNumberException;
+import com._02_lottoticket.lotto_ticket.domain.exception.InvalidLottoNumberException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -22,7 +24,7 @@ class LottoTest {
         assertThatThrownBy(() -> {
             Lotto lotto = Lotto.create(numbers);
             lotto.setBonus(bonus);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(DuplicatedLottoNumberException.class);
     }
 
     @Test
@@ -58,7 +60,7 @@ class LottoTest {
         // Act
         var exception = catchThrowable(() -> Lotto.create(numbers));
         // Assert
-        assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+        assertThat(exception).isInstanceOf(DuplicatedLottoNumberException.class);
     }
 
     @Test
@@ -73,8 +75,8 @@ class LottoTest {
         var exceptionMin = catchThrowable(() -> Lotto.create(minNumber));
 
         // Assert
-        assertThat(exceptionMax).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exceptionMin).isInstanceOf(IllegalArgumentException.class);
+        assertThat(exceptionMax).isInstanceOf(InvalidLottoNumberException.class);
+        assertThat(exceptionMin).isInstanceOf(InvalidLottoNumberException.class);
     }
 
     @Test
@@ -83,8 +85,8 @@ class LottoTest {
         var exception1 = catchThrowable(() -> Lotto.create(List.of(1)));
         var exception2 = catchThrowable(() -> Lotto.create(List.of(1, 2, 3, 4, 5, 6, 7, 8)));
 
-        assertThat(exception1).isInstanceOf(IllegalArgumentException.class);
-        assertThat(exception2).isInstanceOf(IllegalArgumentException.class);
+        assertThat(exception1).isInstanceOf(InvalidLottoNumberException.class);
+        assertThat(exception2).isInstanceOf(InvalidLottoNumberException.class);
     }
 
     @Nested
@@ -117,7 +119,7 @@ class LottoTest {
         void test2(String args) throws Exception {
             var exception = catchThrowable(() -> Lotto.create(args));
 
-            assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+            assertThat(exception).isInstanceOf(InvalidLottoNumberException.class);
         }
 
         @Test
@@ -127,7 +129,7 @@ class LottoTest {
 
             var exception = catchThrowable(() -> Lotto.create(numbers));
 
-            assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+            assertThat(exception).isInstanceOf(InvalidLottoNumberException.class);
         }
 
         @Test
@@ -138,7 +140,7 @@ class LottoTest {
             // Act
             var exception = catchThrowable(() -> Lotto.create(numbers));
             // Assert
-            assertThat(exception).isInstanceOf(IllegalArgumentException.class);
+            assertThat(exception).isInstanceOf(DuplicatedLottoNumberException.class);
         }
     }
 }
