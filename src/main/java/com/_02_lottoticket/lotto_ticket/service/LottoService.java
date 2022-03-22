@@ -28,7 +28,7 @@ public final class LottoService {
     private int getRank(Lotto lotto) {
         Integer sameNumberCount = winningLotto.getSameNumberCount(lotto);
         boolean correctBonusNumber = winningLotto.isCorrectBonusNumber(lotto);
-        int rank = 0;
+        int rank;
         switch (sameNumberCount) {
             case 6 -> rank = 1;
             case 5 -> {
@@ -36,7 +36,12 @@ public final class LottoService {
             }
             case 4 -> rank = 4;
             case 3 -> rank = 5;
+            default -> rank = 0;
         }
         return rank;
+    }
+
+    public Lotto getWinningLotto() {
+        return winningLotto;
     }
 }

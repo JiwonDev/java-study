@@ -51,10 +51,5 @@ class LottoServiceTest {
             this.lotto = lotto;
             return lotto;
         }
-
-        public Lotto getWinningLotto() {
-            return lotto;
-        }
     }
-
 }

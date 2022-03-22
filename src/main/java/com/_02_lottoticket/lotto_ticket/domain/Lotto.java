@@ -81,7 +81,7 @@ public final class Lotto {
         return Objects.equals(this.bonus, lotto.getBonus());
     }
 
-    private Integer getBonus() {
+    public Integer getBonus() {
         return this.bonus;
     }
 
@@ -93,4 +93,21 @@ public final class Lotto {
         this.bonus = bonus;
     }
 
+    @Override
+    public String toString() {
+        return "Lotto{" +
+            "numbers=" + numbers +
+            ", bonus=" + bonus +
+            '}';
+    }
+
+    public String toResultString() {
+        var string = new StringBuilder();
+        for (var number : this.getNumbers()) {
+            string.append(number).append(" ");
+        }
+        string.append(this.getBonus());
+
+        return string.toString();
+    }
 }
