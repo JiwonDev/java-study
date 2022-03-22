@@ -19,7 +19,7 @@ public final class LottoGeneratingStrategyImpl implements LottoGeneratingStrateg
 
         List<Integer> numbers = set.stream().toList();
         Lotto lotto = Lotto.create(numbers.subList(0, 6));
-        lotto.setBonus(numbers.get(7));
+        lotto.setBonus(numbers.get(numbers.size()-1));
         return lotto;
     }
 }

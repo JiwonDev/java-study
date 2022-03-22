@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 final class RacingGameServiceTest {
 
     @Test
-    @DisplayName("게미을 실행하고 입력한 횟수만큼 자동차 경주를 진행한다.")
+    @DisplayName("게임을 실행하고 입력한 횟수만큼 자동차 경주를 진행한다.")
     void show_result() throws Exception {
         // Arrange
         var spyGameStrategy = new SpyGameStrategy();

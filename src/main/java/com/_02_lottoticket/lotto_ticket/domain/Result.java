@@ -10,6 +10,10 @@ public final class Result {
         this.rank = rank;
     }
 
+    public Lotto getLotto() {
+        return lotto;
+    }
+
     public Integer getRank() {
         return rank;
     }
