@@ -1,5 +1,7 @@
 package com._02_lottoticket.lotto_ticket.domain;
 
+import com._02_lottoticket.lotto_ticket.domain.exception.DuplicatedLottoNumberException;
+import com._02_lottoticket.lotto_ticket.domain.exception.InvalidLottoNumberException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,10 +22,17 @@ public final class Lotto {
     }
 
     public static Lotto create(String input) {
-        if (input == null) {
-            throw new IllegalArgumentException();
+        if (input == null || input.isEmpty()) {
+            throw new InvalidLottoNumberException();
         }
-        List<Integer> nums = Arrays.stream(input.split(",")).map(Integer::parseInt).toList();
+
+        List<Integer> nums;
+        try {
+            nums = Arrays.stream(input.split(",")).map(Integer::parseInt).toList();
+        } catch (NumberFormatException e) {
+            throw new InvalidLottoNumberException();
+        }
+
         isValid(nums);
         return new Lotto(nums);
     }
@@ -41,24 +50,24 @@ public final class Lotto {
 
     private static void isValid(List<Integer> nums) {
         if (nums.size() != 6) {
-            throw new IllegalArgumentException();
+            throw new InvalidLottoNumberException();
         }
 
         Set<Integer> set = Set.copyOf(nums);
         if (set.size() != nums.size()) {
-            throw new IllegalArgumentException();
+            throw new DuplicatedLottoNumberException();
         }
 
         boolean isLimit = nums.stream().anyMatch(item -> item < MIN_NUMBER || item > MAX_NUMBER);
         if (isLimit) {
-            throw new IllegalArgumentException();
+            throw new InvalidLottoNumberException();
         }
     }
 
     private void isDuplicated(List<Integer> numbers, Integer bonus) {
         boolean checkDuplicated = numbers.stream().anyMatch(num -> num.equals(bonus));
         if (checkDuplicated) {
-            throw new IllegalArgumentException();
+            throw new DuplicatedLottoNumberException();
         }
     }
 
@@ -87,7 +96,7 @@ public final class Lotto {
 
     public void setBonus(Integer bonus) {
         if (this.bonus != null) {
-            throw new IllegalArgumentException();
+            throw new InvalidLottoNumberException();
         }
         isDuplicated(this.numbers, bonus);
         this.bonus = bonus;
