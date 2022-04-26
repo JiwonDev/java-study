@@ -9,7 +9,6 @@ public final class ChessController {
 
     public void start(GameRequest request) {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.init();
     }
 
     public GameResponse play(InputRequest request) {
