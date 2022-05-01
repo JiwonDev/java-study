@@ -46,6 +46,6 @@ public final class StringConverter {
     }
 
     private List<String> parseToken(String expression) {
-        return Arrays.asList(expression.split("[+]"));
+        return Arrays.asList(expression.split(REGEX_OPERATORS));
     }
 }
