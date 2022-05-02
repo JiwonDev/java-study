@@ -7,13 +7,14 @@ import java.util.Map;
 public class Calculator {
 
     private final Map<String, Operator> operatorMap;
+    private final double UNEXPECTED_EXPRESSION = 0D;
 
     public Calculator() {
         this.operatorMap = Map.of(
                 "+", (a, b) -> a + b,
                 "-", (a, b) -> a - b,
                 "/", (a, b) -> {
-                    if(b == 0D){
+                    if(b == UNEXPECTED_EXPRESSION){
                         throw new RuntimeException("0으로 나누기 불가");
                     }
                     return a / b;
@@ -30,14 +31,15 @@ public class Calculator {
             List<String> operators = preParedCalculator.getOperators(fun);
             return calculation(numbers, operators);
         }
-        return 0D;
+
+        return UNEXPECTED_EXPRESSION;
     }
 
     private Double calculation(List<Double> numbers, List<String> operators) {
         Iterator<String> iterator = operators.iterator();
         return numbers.stream().reduce((x, y) ->
                 operatorMap.get(iterator.next()).apply(x, y))
-                .orElseGet(() -> 0D);
+                .orElseGet(() -> UNEXPECTED_EXPRESSION);
     }
 
 
