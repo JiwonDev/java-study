@@ -1,4 +1,4 @@
-package com.samsung;
+package com.sasung;
 
 import java.util.Scanner;
 
