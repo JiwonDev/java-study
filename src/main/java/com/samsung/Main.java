@@ -16,10 +16,5 @@ public final class Main {
 //        System.out.println(stringCal.add(str));
         System.out.println(stringCal.calculate(str));
 
-//        StringCal stringCalculator = new StringCal();
-//
-//        String[] a = stringCalculator.split("3+4-5*6/2");
-//        System.out.println(stringCalculator.calString(a));
     }
-
 }
