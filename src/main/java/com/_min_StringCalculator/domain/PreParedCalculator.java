@@ -21,7 +21,7 @@ public class PreParedCalculator {
             return Pattern.compile(SPLIT_OPERATOR).matcher(fun)
                     .results().map(MatchResult::group).toList();
         }
-        return null;
+        return List.of();
     }
 
     public List<Double> getNumbers(String fun) {
@@ -29,6 +29,6 @@ public class PreParedCalculator {
             return Pattern.compile(SPLIT_NUMBER).matcher(fun)
                     .results().map(x -> Double.parseDouble(x.group())).toList();
         }
-        return null;
+        return List.of();
     }
 }
